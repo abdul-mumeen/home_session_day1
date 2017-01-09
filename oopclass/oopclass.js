@@ -24,7 +24,7 @@ Car: function (name, model, type)
 				break;
 	}
 	var newDoor = new Doors(this.name);
-	var newOtherProperties = new OtherProperties(type);
+	var newOtherProperties = new OtherProperties(this.type);
 	this.numOfDoors = newDoor.numOfDoors;
 	this.isSaloon = newOtherProperties.isSaloon;
 	this.numOfWheels = newOtherProperties.numOfWheels;
