@@ -7,40 +7,44 @@ BankAccount: function(accountName, type)
 	var accTypeVar = new AccountTypeVariats();
 	this.name = accountName;
 	this.type = type;
-	this.balance = accTypeVar.initBalance(this.type);
-	this.interestRate = accTypeVar.interestRate(this.type);
-	this.withdraw = withdraw;
-	this.deposit = deposit;
-	this.addInterest = addInterest;
+	this.balance = accTypeVar.initBalance(type);
+	this.interestRate = accTypeVar.interestRate(type);
+	this.withdraw = function(amount)
+	{
+		if (amount <= this.balance)
+		{
+			this.balance -= amount;
+		}
+		else
+		{
+			return "cannot with below minimum balance";
+		}
+	};
+	this.deposit = function(amount)
+	{
+		this.balance += amount;
+	};
+	this.addInterest = function()
+	{
+		this.balance += (this.interestRate * this.balance);
+	};
 },
 CurrentAccount: function()
 {
 	this.haveCheckbook = true;
 	this.canIssueCheck = canIssueCheck;
-	this.__proto__  = exports.BankAccount;
+	module.exports.BankAccount.apply(this, Array.prototype.slice.call(arguments));;
 },
 SavingsAccount: function()
 {
 	this.getBonus = true;
 	this.canGetBonus = canGetBonus;
-	this.__proto__ = exports.BankAccount;
-}
+	module.exports.BankAccount.apply(this, Array.prototype.slice.call(arguments));;
+},
 };
-var withdraw = function(amount)
-{
-	if (amount <= this.balance)
-	{
-		this.balance -= amount;
-	}
-};
-var deposit = function(amount)
-{
-	this.balance += amount;
-};
-var addInterest = function()
-{
-	this.balance += (this.interestRate * this.balance);
-};
+module.exports.CurrentAccount.prototype = Object.create(module.exports.BankAccount.prototype);
+module.exports.SavingsAccount.prototype = Object.create(module.exports.BankAccount.prototype);
+
 
 var AccountTypeVariats = function(){};
 AccountTypeVariats.prototype.initBalance = function(type)

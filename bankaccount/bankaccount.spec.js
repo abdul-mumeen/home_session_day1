@@ -25,11 +25,11 @@
 
     it("The current account can withdraw but not below minimum balance", function() {
       var mCur = new myApp.CurrentAccount('Adeyemi', 'Current Account');
-      expect(mCur.withdraw(500)).toBe('cannot with below minimum balance');
+      expect(mCur.withdraw(1500)).toBe('cannot with below minimum balance');
       mCur.deposit(1000);
       expect(mCur.balance).toBe(2000);
        mCur.withdraw(1000);
-      expect(mCur.balance).toBe(1500);
+      expect(mCur.balance).toBe(1000);
     });
 
     it("The current account should have an interest rate of 5% when due", function() {
@@ -74,8 +74,9 @@ describe("SavingsAccount Class: Create a SavingsAccount, give it minimum balance
       var zSav = new myApp.SavingsAccount('Adeyemi', 'Savings Account');;
       zSav.addInterest();
       expect(zSav.balance).toBe(0);
-      mSav.deposit(1000);
-      expect(mSav.balance).toBe(1010);
+      zSav.deposit(1000);
+      zSav.addInterest();
+      expect(zSav.balance).toBe(1010);
     });
 
   });
